@@ -1,88 +1,488 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Uma surpresa para Milena 💗</title>
-<style>
-*{box-sizing:border-box}
-body{
-  margin:0; min-height:100vh; font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#fff7fb,#ffdceb);
-  color:#2b1730; display:flex; align-items:center; justify-content:center;
-  overflow:hidden;
-}
-.bg{position:fixed;inset:0;pointer-events:none}
-.blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.45}
-.b1{width:300px;height:300px;background:#ff78ae;top:-120px;left:-100px}
-.b2{width:360px;height:360px;background:#f5a6d0;right:-150px;bottom:-150px}
-.card{
-  width:min(92vw,520px); padding:42px 28px; text-align:center;
-  background:rgba(255,255,255,.82); backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.9); border-radius:30px;
-  box-shadow:0 25px 70px rgba(150,40,90,.18); position:relative; z-index:2;
-}
-.heart{font-size:58px;animation:float 2.4s ease-in-out infinite}
-h1{font-size:38px;margin:10px 0;color:#e51e73}
-.subtitle{font-size:18px;line-height:1.5;color:#5d3d51}
-button{
-  border:0;border-radius:999px;padding:16px 28px;margin-top:18px;
-  background:linear-gradient(90deg,#ed2377,#ff5a9c);color:white;
-  font-size:17px;font-weight:700;cursor:pointer;
-  box-shadow:0 12px 25px rgba(237,35,119,.25);
-}
-button:active{transform:scale(.97)}
-.hidden{display:none}
-.voucher{text-align:left;margin-top:28px;animation:appear .7s ease}
-.voucher h2{text-align:center;color:#e51e73;margin:0 0 18px}
-.item{background:#fff0f7;border-radius:16px;padding:13px 16px;margin:9px 0}
-.label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#b65b82}
-.value{font-weight:700;margin-top:4px}
-.message{text-align:center;line-height:1.6;margin-top:18px}
-.signature{text-align:center;color:#e51e73;font-weight:700;margin-top:16px}
-.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 3.2s linear forwards;z-index:5}
-@keyframes float{50%{transform:translateY(-8px) scale(1.05)}}
-@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
-</style>
-</head>
-<body>
-<div class="bg"><div class="blob b1"></div><div class="blob b2"></div></div>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uma surpresa para Milena 💗</title>
 
-<main class="card">
-  <div class="heart">💗</div>
-  <div id="intro">
-    <h1>Olá, Milena! ❤️</h1>
-    <p class="subtitle">Você recebeu uma surpresa especial.<br>Mas primeiro precisa desbloquear seu presente… ✨</p>
-    <button onclick="reveal()">Descobrir meu presente 🎁</button>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fff8fc, #ffd8e8, #ffc9df);
+      color: #351c2d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(4px);
+      opacity: 0.4;
+    }
+
+    .b1 {
+      width: 330px;
+      height: 330px;
+      background: #ff8fba;
+      top: -150px;
+      left: -120px;
+    }
+
+    .b2 {
+      width: 400px;
+      height: 400px;
+      background: #f5a6c9;
+      right: -180px;
+      bottom: -180px;
+    }
+
+    .card {
+      width: min(92vw, 560px);
+      max-height: 92vh;
+      overflow: auto;
+      padding: 42px 30px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid white;
+      border-radius: 32px;
+      box-shadow: 0 25px 80px rgba(145, 35, 82, 0.20);
+      position: relative;
+      z-index: 2;
+    }
+
+    .screen {
+      animation: fadeIn 0.7s ease;
+    }
+
+    .heart {
+      font-size: 58px;
+      animation: float 2.4s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin: 12px 0 10px;
+      color: #df276f;
+    }
+
+    h2 {
+      font-size: 30px;
+      color: #df276f;
+      margin: 8px 0 18px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      line-height: 1.65;
+      color: #684c5d;
+    }
+
+    .pause {
+      font-size: 20px;
+      line-height: 1.7;
+      max-width: 430px;
+      margin: 18px auto;
+      color: #684c5d;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 16px 28px;
+      margin-top: 20px;
+      background: linear-gradient(90deg, #e92878, #ff6ba5);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(233, 40, 120, 0.27);
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(233, 40, 120, 0.34);
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .voucher {
+      margin-top: 25px;
+      text-align: left;
+      background: rgba(255, 245, 250, 0.9);
+      border: 1px solid #f7c2d8;
+      border-radius: 25px;
+      padding: 23px;
+      animation: voucherIn 0.8s ease;
+    }
+
+    .voucher-title {
+      text-align: center;
+      color: #df276f;
+      font-size: 27px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .services {
+      display: grid;
+      gap: 10px;
+    }
+
+    .service {
+      background: white;
+      border-radius: 15px;
+      padding: 13px 15px;
+      font-size: 16px;
+      box-shadow: 0 4px 14px rgba(150, 50, 90, 0.07);
+      opacity: 0;
+      transform: translateX(-12px);
+      animation: serviceIn 0.5s ease forwards;
+    }
+
+    .service:nth-child(1) {
+      animation-delay: 0.15s;
+    }
+
+    .service:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .service:nth-child(3) {
+      animation-delay: 0.45s;
+    }
+
+    .service:nth-child(4) {
+      animation-delay: 0.6s;
+    }
+
+    .details {
+      margin-top: 18px;
+      background: white;
+      border-radius: 16px;
+      padding: 15px;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .final {
+      margin: 25px 4px 0;
+      padding-top: 22px;
+      border-top: 1px solid #f1bfd2;
+      font-size: 17px;
+      line-height: 1.75;
+      text-align: center;
+      color: #513747;
+    }
+
+    .signature {
+      margin-top: 12px;
+      color: #df276f;
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .confetti {
+      position: fixed;
+      top: -30px;
+      font-size: 22px;
+      animation: fall 3.4s linear forwards;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-9px) scale(1.05);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes voucherIn {
+      from {
+        opacity: 0;
+        transform: scale(0.96) translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes serviceIn {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(540deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 32px 20px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      h2 {
+        font-size: 25px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+      }
+
+      .pause {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
   </div>
 
-  <section id="voucher" class="voucher hidden">
-    <h2>Seu presente é… ✨</h2>
-    <div class="item"><div class="label">Você ganhou</div>
-      <div class="value">Lavagem + Corte + Hidratação de Ozônio + Escova</div></div>
-    <div class="item"><div class="label">📍 Local</div><div class="value">ESPAÇO SARON</div></div>
-    <div class="item"><div class="label">📅 Data</div><div class="value">19/09/2026 às 14:00 horas</div></div>
-    <p class="message">Um momento só seu para relaxar, se cuidar e aproveitar. 💕<br><strong>Você merece!</strong></p>
-    <div class="signature">Com amor, Felipe ❤️</div>
-  </section>
-</main>
+  <main class="card">
 
-<script>
-function reveal(){
-  document.getElementById('intro').classList.add('hidden');
-  document.getElementById('voucher').classList.remove('hidden');
-  const emojis=['💗','💕','✨','🌸','💖','🎀'];
-  for(let i=0;i<28;i++){
-    const s=document.createElement('span');
-    s.className='confetti';
-    s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-    s.style.left=Math.random()*100+'vw';
-    s.style.animationDelay=Math.random()*.8+'s';
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),4000);
-  }
-}
-</script>
+    <!-- PRIMEIRA TELA -->
+    <section id="s1" class="screen">
+
+      <div class="heart">
+        💗
+      </div>
+
+      <h1>
+        Oi, meu amor... ❤️
+      </h1>
+
+      <p class="subtitle">
+        Eu preparei uma coisinha especial para você.
+      </p>
+
+      <button onclick="go(1)">
+        ✨ Abrir minha surpresa
+      </button>
+
+    </section>
+
+
+    <!-- SEGUNDA TELA -->
+    <section id="s2" class="screen hidden">
+
+      <div style="font-size: 34px;">
+        🌷
+      </div>
+
+      <h2>
+        Porque você merece uma pausa.
+      </h2>
+
+      <p class="pause">
+        Um momento para esquecer a correria,
+        relaxar, se cuidar e simplesmente aproveitar. 🌷
+      </p>
+
+      <button onclick="reveal()">
+        Descobrir meu presente 💗
+      </button>
+
+    </section>
+
+
+    <!-- TERCEIRA TELA -->
+    <section id="s3" class="screen hidden">
+
+      <div class="heart">
+        🎀
+      </div>
+
+      <h1>
+        SURPRESA, MILENA! 🎀
+      </h1>
+
+      <p class="subtitle">
+        Você ganhou uma tarde especial no
+      </p>
+
+
+      <div class="voucher">
+
+        <div class="voucher-title">
+          ESPAÇO SARON 💗
+        </div>
+
+
+        <div class="services">
+
+          <div class="service">
+            ✨ Lavagem
+          </div>
+
+          <div class="service">
+            ✨ Corte
+          </div>
+
+          <div class="service">
+            ✨ Hidratação de ozônio
+          </div>
+
+          <div class="service">
+            ✨ Escova
+          </div>
+
+        </div>
+
+
+        <div class="details">
+
+          📅 <strong>19/09/2026</strong>
+
+          <br>
+
+          🕑 <strong>14:00 horas</strong>
+
+        </div>
+
+
+        <div class="final">
+
+          <strong>
+            “Eu queria te dar esse momento porque sei o tanto que queria.
+          </strong>
+
+          <br><br>
+
+          Você é uma pessoa muito especial para mim
+          e eu espero que essa tarde faça você sorrir
+          tanto quanto você faz eu sorrir. ❤️
+
+          <br><br>
+
+          Aproveita muito, meu amor.
+
+          <br>
+
+          <strong>
+            Te amo. 💗
+          </strong>
+
+          <div class="signature">
+            Felipe ❤️
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    function go(n) {
+
+      document
+        .getElementById("s" + n)
+        .classList.add("hidden");
+
+      document
+        .getElementById("s" + (n + 1))
+        .classList.remove("hidden");
+
+    }
+
+
+    function reveal() {
+
+      go(2);
+
+      setTimeout(() => {
+
+        let emojis = [
+          "💗",
+          "💕",
+          "✨",
+          "🌸",
+          "🎀",
+          "💖"
+        ];
+
+        for (let i = 0; i < 34; i++) {
+
+          let s = document.createElement("span");
+
+          s.className = "confetti";
+
+          s.textContent =
+            emojis[Math.floor(Math.random() * emojis.length)];
+
+          s.style.left =
+            Math.random() * 100 + "vw";
+
+          s.style.animationDelay =
+            Math.random() * 0.8 + "s";
+
+          document.body.appendChild(s);
+
+          setTimeout(() => {
+            s.remove();
+          }, 4500);
+
+        }
+
+      }, 200);
+
+    }
+
+  </script>
+
 </body>
 </html>
