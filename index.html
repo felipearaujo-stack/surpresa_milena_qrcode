@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uma surpresa para Milena 💗</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#fff7fb,#ffdceb);
+  color:#2b1730; display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.bg{position:fixed;inset:0;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.45}
+.b1{width:300px;height:300px;background:#ff78ae;top:-120px;left:-100px}
+.b2{width:360px;height:360px;background:#f5a6d0;right:-150px;bottom:-150px}
+.card{
+  width:min(92vw,520px); padding:42px 28px; text-align:center;
+  background:rgba(255,255,255,.82); backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.9); border-radius:30px;
+  box-shadow:0 25px 70px rgba(150,40,90,.18); position:relative; z-index:2;
+}
+.heart{font-size:58px;animation:float 2.4s ease-in-out infinite}
+h1{font-size:38px;margin:10px 0;color:#e51e73}
+.subtitle{font-size:18px;line-height:1.5;color:#5d3d51}
+button{
+  border:0;border-radius:999px;padding:16px 28px;margin-top:18px;
+  background:linear-gradient(90deg,#ed2377,#ff5a9c);color:white;
+  font-size:17px;font-weight:700;cursor:pointer;
+  box-shadow:0 12px 25px rgba(237,35,119,.25);
+}
+button:active{transform:scale(.97)}
+.hidden{display:none}
+.voucher{text-align:left;margin-top:28px;animation:appear .7s ease}
+.voucher h2{text-align:center;color:#e51e73;margin:0 0 18px}
+.item{background:#fff0f7;border-radius:16px;padding:13px 16px;margin:9px 0}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#b65b82}
+.value{font-weight:700;margin-top:4px}
+.message{text-align:center;line-height:1.6;margin-top:18px}
+.signature{text-align:center;color:#e51e73;font-weight:700;margin-top:16px}
+.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 3.2s linear forwards;z-index:5}
+@keyframes float{50%{transform:translateY(-8px) scale(1.05)}}
+@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div></div>
+
+<main class="card">
+  <div class="heart">💗</div>
+  <div id="intro">
+    <h1>Olá, Milena! ❤️</h1>
+    <p class="subtitle">Você recebeu uma surpresa especial.<br>Mas primeiro precisa desbloquear seu presente… ✨</p>
+    <button onclick="reveal()">Descobrir meu presente 🎁</button>
+  </div>
+
+  <section id="voucher" class="voucher hidden">
+    <h2>Seu presente é… ✨</h2>
+    <div class="item"><div class="label">Você ganhou</div>
+      <div class="value">Lavagem + Corte + Hidratação de Ozônio + Escova</div></div>
+    <div class="item"><div class="label">📍 Local</div><div class="value">ESPAÇO SARON</div></div>
+    <div class="item"><div class="label">📅 Data</div><div class="value">19/09/2026 às 14:00 horas</div></div>
+    <p class="message">Um momento só seu para relaxar, se cuidar e aproveitar. 💕<br><strong>Você merece!</strong></p>
+    <div class="signature">Com amor, Felipe ❤️</div>
+  </section>
+</main>
+
+<script>
+function reveal(){
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('voucher').classList.remove('hidden');
+  const emojis=['💗','💕','✨','🌸','💖','🎀'];
+  for(let i=0;i<28;i++){
+    const s=document.createElement('span');
+    s.className='confetti';
+    s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    s.style.left=Math.random()*100+'vw';
+    s.style.animationDelay=Math.random()*.8+'s';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),4000);
+  }
+}
+</script>
+</body>
+</html>
